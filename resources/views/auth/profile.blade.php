@@ -90,10 +90,11 @@
           <a href="{{route('download','filename=cookie-policy.pdf')}}" class="d-block text-decoration-none text-info fw-semibold"><i class="bi bi-file-earmark-pdf me-2"></i>Cookie policy</a>
         </div>
 
+        {{--
         <!-- User Documents -->
         <h2>User Documents</h2>
         <ul>
-            @forelse ($user->files as $file)
+           @forelse (($user->files ?? []) as $file)
                 <li>
                     <a href="{{Storage::url("public/docs/users/$user->id/" . $file->name)}}">{{$file->name}}</a>
                 </li>
@@ -108,6 +109,7 @@
                 <button type="submit" class="btn btn-primary mx-3">Upload</button>
             </div>
         </form>
+       --}}
       </div>
     </div>
   </div>

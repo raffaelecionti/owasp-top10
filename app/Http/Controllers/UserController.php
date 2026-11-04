@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+
+use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -12,28 +13,37 @@ use Intervention\Image\Facades\Image as Image;
 class UserController extends Controller
 {
     // UNSECURE
-    public function show($id)
-	{
-		$user = User::findOrFail($id);
+ //  public function show($id)
+//{
+ //   $user = Auth::user();
 
-        return view('auth.profile',compact('user'));
-	}
+  //  if (!$user || $user->id != $id) {
+  //      abort(403);
+  //  }
+
+  //  return view('auth.profile', compact('user'));
+//}
 
     // SECURE
-    // public function profile(){
-    //     if(!$user = Auth::user())
-    //     return response()->json(['message' => 'Forbidden Operation'], 403);
+     public function profile(){
+       if(!$user = Auth::user())
+         return response()->json(['message' => 'Forbidden Operation'], 403);
         
-    //     return view('auth.profile',compact('user'));
-    // }
+        return view('auth.profile',compact('user'));
+     }
 
-    public function update(Request $request, $id){
-        $user = User::find($id);
+    public function update(Request $request, $id)
+{
+    $user = Auth::user();
 
-        $user->update($request->all());
-
-        return back()->with('message','User updated');
+    if (!$user || $user->id != $id) {
+        abort(403);
     }
+
+    $user->update($request->only(['name', 'email']));
+
+    return back()->with('message', 'User updated');
+}
     public function changeEmail(Request $request){
         
         if(!$user = Auth::user())
