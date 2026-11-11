@@ -8,7 +8,7 @@ use Laravel\Fortify\Http\Requests\LoginRequest;
 
 class AuthenticateUser
   {
- public function invoke(LoginRequest $request)
+ public function __invoke(LoginRequest $request)
  {
 
  $credentials = $request->only('email', 'password');

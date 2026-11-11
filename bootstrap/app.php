@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\BlockSuspiciousIps;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
 
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'block.suspicious.ips' => BlockSuspiciousIps::class,
             'auth' => \App\Http\Middleware\Authenticate::class,
             'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         ]);
