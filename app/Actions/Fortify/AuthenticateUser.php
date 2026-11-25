@@ -2,6 +2,7 @@
 namespace App\Actions\Fortify;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use illuminate\Support\Facades\Log;
 use Laravel\Fortify\Http\Requests\LoginRequest;
 
 
@@ -18,6 +19,7 @@ class AuthenticateUser
     $passwordWithSaltAndPepper = $credentials['password'] . $user->salt . $pepper;
     if (Hash::check($passwordWithSaltAndPepper, $user->password)) {
         Auth::login($user);
+        Log::info("User $user->name logged in at" . now(). "from " . $request->ip());
         return $user;
     }
  }

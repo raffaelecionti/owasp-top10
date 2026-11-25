@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Article;
 use App\Services\FinancialDataService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -49,6 +50,7 @@ class AdminController extends Controller
         // UNSECURE
 		$user = User::find($id);
         $user->is_admin = !$user->is_admin;
+        Log::info("User $user->email has been" . ($user->is_admin ? "promoted" : "demoted"). " to admin at " . now(). "from " . request()->ip(). " by " . Auth::user()->email);
         $user->save();
         return back();
 	}
